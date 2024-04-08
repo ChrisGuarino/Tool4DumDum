@@ -16,7 +16,7 @@ async def on_chat_start():
         [
             (
                 "system",
-                "You're a troubleshooting guide for semicoductor manufacturing tools.",
+                "You're a troubleshooting guide for semiconductor manufacturing tools.",
             ),
             ("human", "{question}"),
         ]
