@@ -4,16 +4,12 @@ from langchain.schema.runnable.config import RunnableConfig
 import chainlit as cl
 from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
-
-#######
 from langchain_community.document_loaders import PyPDFLoader
-
-loader = PyPDFLoader("./testdir/2304.08485.pdf")
-pages = loader.load_and_split()
-
 from langchain_community.embeddings import GPT4AllEmbeddings
 from langchain_community.vectorstores import Chroma
 
+loader = PyPDFLoader("./testdir/2304.08485.pdf")
+pages = loader.load_and_split()
 vectorstore = Chroma.from_documents(documents=pages, embedding=GPT4AllEmbeddings())
 
 def format_docs(docs):
@@ -31,7 +27,7 @@ async def on_chat_start():
             ("human", "{question}"),
         ]
     )
-    runnable = {"docs": format_docs} | prompt | model | StrOutputParser()
+    runnable = prompt | model | StrOutputParser()
     cl.user_session.set("runnable", runnable)
 
 @cl.on_message
